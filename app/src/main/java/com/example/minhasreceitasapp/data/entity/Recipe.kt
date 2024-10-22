@@ -1,0 +1,11 @@
+package com.example.minhasreceitasapp.data.entity
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Recipe (
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo("name") val name: String
+)
