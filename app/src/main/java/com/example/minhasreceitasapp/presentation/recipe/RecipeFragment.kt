@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.example.minhasreceitasapp.R
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import com.example.minhasreceitasapp.databinding.FragmentFirstBinding
 import com.example.minhasreceitasapp.presentation.recipe.adapter.RecipeAdapter
 
@@ -15,6 +16,10 @@ import com.example.minhasreceitasapp.presentation.recipe.adapter.RecipeAdapter
  */
 class RecipeFragment : Fragment() {
 
+
+    private val viewModel: RecipesViewModel by viewModels {
+        RecipesViewModel.fatory()
+    }
     private lateinit var binding: FragmentFirstBinding
     private val adapter by lazy { RecipeAdapter()}
 
@@ -33,6 +38,7 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         setupAdapter()
+        observeState()
 
     }
 
@@ -43,6 +49,29 @@ class RecipeFragment : Fragment() {
     }
     fun setupAdapter(){
         binding.rvRecipes.adapter = adapter
+    }
+
+    private fun observeState() {
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is RecipeState.Loading-> {
+                    binding.pbLoading.isVisible = true
+                }
+                is RecipeState.Success -> {
+                    binding.pbLoading.isVisible = false
+                    adapter.submitList(state.recipe)
+                }
+                is RecipeState.Empty -> {
+                    binding.pbLoading.isVisible = false
+                    Toast.makeText(requireContext(), "Nenhuma receita encontrada", Toast.LENGTH_SHORT).show()
+                }
+                is RecipeState.Error -> {
+                   binding.pbLoading.isVisible = false
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
     }
 
 
