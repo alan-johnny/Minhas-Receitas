@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.minhasreceitasapp.databinding.FragmentFirstBinding
+import com.example.minhasreceitasapp.presentation.dialog.DialogEditTextFragment
 import com.example.minhasreceitasapp.presentation.recipe.adapter.RecipeAdapter
 
 /**
@@ -44,7 +45,7 @@ class RecipeFragment : Fragment() {
 
     private fun setupListeners() {
         binding.fabRecipe.setOnClickListener{
-            //@TODO show dialog
+            showDialog()
         }
     }
     fun setupAdapter(){
@@ -69,11 +70,18 @@ class RecipeFragment : Fragment() {
                    binding.pbLoading.isVisible = false
                     Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
     }
 
+    private fun showDialog() {
+        DialogEditTextFragment.Show(
+            "Adicionar Receita",
+            "Nome da Receita",
+            fragmentManager = parentFragmentManager,
+            "DialogEditTextFragment"
+        )
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
