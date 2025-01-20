@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.example.minhasreceitasapp.databinding.FragmentFirstBinding
 import com.example.minhasreceitasapp.presentation.dialog.DialogEditTextFragment
+import com.example.minhasreceitasapp.presentation.dialog.DialogEditTextFragment.Companion.FRAGMENT_RESULT
 import com.example.minhasreceitasapp.presentation.recipe.adapter.RecipeAdapter
 
 /**
@@ -47,6 +50,10 @@ class RecipeFragment : Fragment() {
         binding.fabRecipe.setOnClickListener{
             showDialog()
         }
+        setFragmentResultListener(DialogEditTextFragment.FRAGMENT_RESULT) { requestKey: String, bundle ->
+            val name = bundle.getString(DialogEditTextFragment.EDIT_TEXT_VALUE) ?: ""
+                viewModel.insert(name)
+        }
     }
     fun setupAdapter(){
         binding.rvRecipes.adapter = adapter
@@ -70,6 +77,7 @@ class RecipeFragment : Fragment() {
                    binding.pbLoading.isVisible = false
                     Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
     }
