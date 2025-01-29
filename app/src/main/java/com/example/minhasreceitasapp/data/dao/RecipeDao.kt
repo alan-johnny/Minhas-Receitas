@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
+import com.example.minhasreceitasapp.data.entity.FullRecipeEntity
 import com.example.minhasreceitasapp.data.entity.Ingredient
 import com.example.minhasreceitasapp.data.entity.PrepareMode
 import com.example.minhasreceitasapp.data.entity.RecipeEntity
@@ -23,6 +25,13 @@ interface RecipeDao  {
     fun insert(prepareMode: PrepareMode)
 
     @Transaction
-    @Query("SELECT * FROM recipe WHERE id = :recipeId")
-    fun getRecipeWithIngredientsAndPrepareModes()
+   @Query("SELECT * FROM recipe WHERE id = :recipeId")
+    fun getRecipeWithIngredientsAndPrepareModes(recipeId: Int): FullRecipeEntity
+
+    @Update
+    fun updeteIngredient(ingredient: Ingredient)
+
+    @Update
+    fun updatePrepareMode(prepareMode: PrepareMode)
+
 }

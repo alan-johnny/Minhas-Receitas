@@ -9,5 +9,5 @@ typealias IngredientEntity = Ingredient
 data class Ingredient(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "recipe_id") val recipeId: Int
+    @ColumnInfo(name = "idRecipe") val idRecipe: Int
 )

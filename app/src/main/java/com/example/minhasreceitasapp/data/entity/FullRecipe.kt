@@ -3,16 +3,18 @@ package com.example.minhasreceitasapp.data.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
+typealias FullRecipeEntity = FullRecipe
+
 data class FullRecipe(
     @Embedded val recipe: RecipeEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "idRecipe",
     )
-    val ingredients: List<IngredientEntity>,
+    val ingredients: List<Ingredient>,
     @Relation(
         parentColumn = "id",
         entityColumn = "idRecipe",
     )
-    val prepareModes: List<PrepareModeEntity>
+    val prepareModes: List<PrepareMode>
 )
