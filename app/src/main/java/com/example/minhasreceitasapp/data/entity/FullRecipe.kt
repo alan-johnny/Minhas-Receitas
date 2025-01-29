@@ -16,5 +16,5 @@ data class FullRecipe(
         parentColumn = "id",
         entityColumn = "idRecipe",
     )
-    val prepareModes: List<PrepareMode>
+    val prepareMode: List<PrepareMode>
 )
