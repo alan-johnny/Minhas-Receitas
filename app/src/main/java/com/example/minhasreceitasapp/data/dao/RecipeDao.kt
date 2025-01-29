@@ -29,9 +29,10 @@ interface RecipeDao  {
     fun getRecipeWithIngredientsAndPrepareModes(recipeId: Int): FullRecipeEntity
 
     @Update
-    fun updeteIngredient(ingredient: Ingredient)
+    fun updateIngredient(ingredient: Ingredient)
 
     @Update
     fun updatePrepareMode(prepareMode: PrepareMode)
+
 
 }
